@@ -22,19 +22,19 @@ import br.com.b3.service.UserService;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@PostMapping(path = "/")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody User user) {
 		User userdb = userRepository.save(user);
 		return new ResponseEntity<Object>(userdb, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(path = "/")
 	public ResponseEntity<Object> getAll() {
 		List<User> userList = userRepository.findAll();
@@ -46,16 +46,16 @@ public class UserController {
 		User user = userService.findById(id);
 		return new ResponseEntity<Object>(user, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(path = "/company/{companyId}")
 	public ResponseEntity<Object> getByCompanyId(@PathVariable Long companyId) {
-		List<User> userList  = userService.findByCompanyId(companyId);
+		List<User> userList = userService.findByCompanyId(companyId);
 		return new ResponseEntity<Object>(userList, HttpStatus.OK);
 	}
-	
+
 	@GetMapping(path = "/email/{email}")
 	public ResponseEntity<Object> getByCompanyEmail(@PathVariable String email) {
-		List<User> userList  = userService.findByEmail(email);
+		List<User> userList = userService.findByEmail(email);
 		return new ResponseEntity<Object>(userList, HttpStatus.OK);
 	}
 }

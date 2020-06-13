@@ -55,7 +55,7 @@ public class ReadCsvImpl {
 	}
 
 	private void applyRulesToCreateAndSaveUser(String[] splitedString) {
-		if (splitedString.length < 2) {
+		if (splitedString.length <= 2) {
 			if (isALineWithAllFields(splitedString)) {
 				createAndSaveUser(splitedString);
 			} else {
@@ -71,14 +71,14 @@ public class ReadCsvImpl {
 			Long companyId = Long.parseLong(splitedString[0]);
 			String email = splitedString[1];
 			Date birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(splitedString[2]);
-			
+
 			User user = new User();
 			user.setCompanyId(companyId);
 			user.setEmail(email);
 			user.setBirthdate(birthdate);
-			
+
 			save(user);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			LOG.info(e.getMessage());
 		}
 	}
@@ -88,9 +88,15 @@ public class ReadCsvImpl {
 	}
 
 	private boolean isALineWithAllFields(String[] splitedString) {
-		return splitedString[0] != null && !splitedString[0].isEmpty() &&
-		splitedString[1] != null && !splitedString[1].isEmpty() &&
-		splitedString[2] != null && !splitedString[2].isEmpty();
+		boolean result = false;
+		try {
+			result = splitedString[0] != null && !splitedString[0].isEmpty() &&
+					splitedString[1] != null && !splitedString[1].isEmpty() &&
+					splitedString[2] != null && !splitedString[2].isEmpty();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	private String[] splitLine(String line) {
