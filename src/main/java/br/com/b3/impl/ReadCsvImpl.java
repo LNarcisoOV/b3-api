@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import br.com.b3.model.FileCsv;
 import br.com.b3.model.User;
+import br.com.b3.service.FileCsvRepository;
 import br.com.b3.service.UserRepository;
 
 @Component
@@ -27,16 +29,24 @@ public class ReadCsvImpl {
 
 	@Autowired
 	private UserRepository userRepositoy;
+	
+	@Autowired
+	private FileCsvRepository fileCsvRepository;
 
 	@Scheduled(fixedRate = THIRTY_SECONDS)
 	public void readCsv() throws IOException {
 		File root = new File(DIRECTORY_OF_CSV_FILES);
 
 		for (File f : root.listFiles()) {
+		
 			if (isCsvFile(f)) {
 				readCsvFile(f);
 			}
+			
+			createAndSaveFileCsv(f);
 		}
+		
+		
 	}
 
 	private void readCsvFile(File f) throws IOException {
@@ -85,6 +95,16 @@ public class ReadCsvImpl {
 
 	private void save(User user) {
 		userRepositoy.save(user);
+	}
+	
+	private void createAndSaveFileCsv(File f) {
+		FileCsv fileCsv = new FileCsv();
+		fileCsv.setName(f.getName());
+		save(fileCsv);
+	}
+
+	private void save(FileCsv fileCsv) {
+		fileCsvRepository.save(fileCsv);
 	}
 
 	private boolean isALineWithAllFields(String[] splitedString) {
