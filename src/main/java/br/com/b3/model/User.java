@@ -32,7 +32,7 @@ public class User {
 	@NotNull
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Past(message = "Birthdate should be in the past.")
-	private Date birthDate;
+	private Date birthdate;
 
 	public Long getUserId() {
 		return userId;
@@ -58,19 +58,19 @@ public class User {
 		this.email = email;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirthdate() {
+		return birthdate;
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirthdate(Date birthDate) {
+		this.birthdate = birthDate;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
 		result = prime * result + ((companyId == null) ? 0 : companyId.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
@@ -86,10 +86,10 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (birthDate == null) {
-			if (other.birthDate != null)
+		if (birthdate == null) {
+			if (other.birthdate != null)
 				return false;
-		} else if (!birthDate.equals(other.birthDate))
+		} else if (!birthdate.equals(other.birthdate))
 			return false;
 		if (companyId == null) {
 			if (other.companyId != null)
@@ -111,7 +111,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", companyId=" + companyId + ", email=" + email + ", birthDate=" + birthDate
+		return "User [userId=" + userId + ", companyId=" + companyId + ", email=" + email + ", birthDate=" + birthdate
 				+ "]";
 	}
 }
