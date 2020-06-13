@@ -1,0 +1,61 @@
+package br.com.b3.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.b3.model.User;
+import br.com.b3.service.UserRepository;
+import br.com.b3.service.UserService;
+
+@RestController
+@RequestMapping(value = "/user")
+public class UserController {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@PostMapping(path = "/")
+	public ResponseEntity<Object> saveUser(@Valid @RequestBody User user) {
+		User userdb = userRepository.save(user);
+		return new ResponseEntity<Object>(userdb, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(path = "/")
+	public ResponseEntity<Object> getAll() {
+		List<User> userList = userRepository.findAll();
+		return new ResponseEntity<Object>(userList, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<Object> getById(@PathVariable Long id) {
+		User user = userService.findById(id);
+		return new ResponseEntity<Object>(user, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/company/{companyId}")
+	public ResponseEntity<Object> getByCompanyId(@PathVariable Long companyId) {
+		List<User> userList  = userService.findByCompanyId(companyId);
+		return new ResponseEntity<Object>(userList, HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/email/{email}")
+	public ResponseEntity<Object> getByCompanyEmail(@PathVariable String email) {
+		List<User> userList  = userService.findByEmail(email);
+		return new ResponseEntity<Object>(userList, HttpStatus.OK);
+	}
+}
