@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,20 +38,25 @@ public class ReadCsvImpl {
 	@Scheduled(fixedRate = THIRTY_SECONDS)
 	public void readCsv() throws IOException {
 		File root = new File(DIRECTORY_OF_CSV_FILES);
-
-		for (File f : root.listFiles()) {
 		
-			if (isCsvFile(f)) {
-				readCsvFile(f);
+		for (File f : root.listFiles()) {
+			List<FileCsv> listOfSavedCsv = fileCsvRepository.findAll();
+			if(isCsvFile(f)){
+				if (isUnreadFile(f, listOfSavedCsv)) {
+					readCsvFileToCreateUser(f);
+					createAndSaveFileCsv(f);
+				}
 			}
 			
-			createAndSaveFileCsv(f);
 		}
-		
-		
 	}
 
-	private void readCsvFile(File f) throws IOException {
+	private boolean isUnreadFile(File file, List<FileCsv> listOfSavedCsv) {
+		Optional<FileCsv> optFile = listOfSavedCsv.stream().filter(f -> f.getName().equals(file.getName())).findAny();
+		return !optFile.isPresent();
+	}
+
+	private void readCsvFileToCreateUser(File f) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(f));
 
 		while (br.ready()) {
@@ -114,7 +121,6 @@ public class ReadCsvImpl {
 					splitedString[1] != null && !splitedString[1].isEmpty() &&
 					splitedString[2] != null && !splitedString[2].isEmpty();
 		}catch(Exception e) {
-			e.printStackTrace();
 		}
 		return result;
 	}
