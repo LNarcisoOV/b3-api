@@ -6,11 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
 
@@ -25,12 +26,14 @@ public class User {
 	@NotNull
 	private Long companyId;
 
-	@Email
+	@NotNull
+	@NotEmpty
+	@Email(message = "Please provide a valid email address", regexp = ".+@.+\\..+")
 	@Size(min = 1, max = 255, message = "The email should have at most 255 characters.")
 	private String email;
 
 	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Past(message = "Birthdate should be in the past.")
 	private Date birthdate;
 
@@ -62,8 +65,8 @@ public class User {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthDate) {
-		this.birthdate = birthDate;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	@Override
