@@ -31,8 +31,13 @@ public class UserController {
 
 	@PostMapping(path = "/")
 	public ResponseEntity<Object> saveUser(@Valid @RequestBody User user) {
-		User userdb = userRepository.save(user);
-		return new ResponseEntity<Object>(userdb, HttpStatus.CREATED);
+		try {
+			userService.validationRulesToSaveUser(user) ;
+			User userdb = userRepository.save(user);
+			return new ResponseEntity<Object>(userdb, HttpStatus.CREATED);
+		} catch(Exception e) {
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping(path = "/")

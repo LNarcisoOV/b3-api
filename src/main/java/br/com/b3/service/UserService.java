@@ -10,4 +10,8 @@ public interface UserService {
 	public List<User> findByCompanyId(Long id);
 	
 	public List<User> findByEmail(String email);
+	
+	public User findByEmailAndCompany(User user);
+	
+	public void validationRulesToSaveUser(User user) throws Exception;
 }
