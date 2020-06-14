@@ -33,7 +33,7 @@ public class User {
 	private String email;
 
 	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone="EST")
 	@Past(message = "Birthdate should be in the past.")
 	private Date birthdate;
 
