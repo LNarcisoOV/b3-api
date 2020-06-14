@@ -26,7 +26,7 @@ public class ReadCsvImpl {
 
 	private static final long THIRTY_SECONDS = 30000l;
 	private static final Logger LOG = LoggerFactory.getLogger(ReadCsvImpl.class);
-	private static final String DIRECTORY_OF_CSV_FILES = new File("").getAbsolutePath().concat("\\app\\data\\");
+	private static final String DIRECTORY_OF_CSV_FILES = new File("").getAbsolutePath().concat("\\app\\files\\");
 	private static final String LINE_OUT_OF_PATTERN = "Line out of pattern.";
 	private static final String LINE_WITHOUT_SOME_FIELD = "Line without some field.";
 	private static final int MAX_FIELDS_PER_LINE = 3;
