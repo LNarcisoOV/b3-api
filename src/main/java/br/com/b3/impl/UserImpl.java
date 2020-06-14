@@ -66,13 +66,13 @@ public class UserImpl implements UserService {
 	private void duplicityValidation(User user) throws Exception {
 		User userDB = findByEmailAndCompany(user);
 		if (userDB != null) {
-			throw new Exception("User already registered.");
+			throw new Exception("User '"+ user.getEmail() +"' is already registered in the company '" + user.getCompanyId() + "'.");
 		}
 	}
 
 	private void companyIdsValidation(User user) throws Exception {
 		if (!VALID_COMPANY_IDS.contains(user.getCompanyId())) {
-			throw new Exception("Invalid company id.");
+			throw new Exception("Invalid company id: '"+ user.getCompanyId() +"'.");
 		}
 	}
 
