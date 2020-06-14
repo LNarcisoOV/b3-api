@@ -19,6 +19,7 @@ import br.com.b3.model.FileCsv;
 import br.com.b3.model.User;
 import br.com.b3.service.FileCsvRepository;
 import br.com.b3.service.UserRepository;
+import br.com.b3.service.UserService;
 
 @Component
 public class ReadCsvImpl {
@@ -28,9 +29,13 @@ public class ReadCsvImpl {
 	private static final String DIRECTORY_OF_CSV_FILES = new File("").getAbsolutePath().concat("\\app\\data\\");
 	private static final String LINE_OUT_OF_PATTERN = "Line out of pattern.";
 	private static final String LINE_WITHOUT_SOME_FIELD = "Line without some field.";
+	private static final int MAX_FIELDS_PER_LINE = 3;
 
 	@Autowired
 	private UserRepository userRepositoy;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private FileCsvRepository fileCsvRepository;
@@ -47,7 +52,6 @@ public class ReadCsvImpl {
 					createAndSaveFileCsv(f);
 				}
 			}
-			
 		}
 	}
 
@@ -72,7 +76,7 @@ public class ReadCsvImpl {
 	}
 
 	private void applyRulesToCreateAndSaveUser(String[] splitedString) {
-		if (splitedString.length <= 2) {
+		if (splitedString.length <= MAX_FIELDS_PER_LINE) {
 			if (isALineWithAllFields(splitedString)) {
 				createAndSaveUser(splitedString);
 			} else {
@@ -93,10 +97,12 @@ public class ReadCsvImpl {
 			user.setCompanyId(companyId);
 			user.setEmail(email);
 			user.setBirthdate(birthdate);
-
+			
+			userService.validationRulesToSaveUser(user);
+			
 			save(user);
 		} catch (Exception e) {
-			LOG.info(e.getMessage());
+			LOG.warn(e.getMessage());
 		}
 	}
 
