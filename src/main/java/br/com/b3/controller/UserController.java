@@ -50,14 +50,14 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<Object> getById(@PathVariable Long id) {
+	public ResponseEntity<Object> getById(@PathVariable Integer id) {
 		User user = userService.findById(id);
 		return new ResponseEntity<Object>(user, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Object> deleteById(@PathVariable Integer id) {
-		userRepository.deleteById(id);
+		userRepository.deleteById(id.intValue());
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
@@ -73,7 +73,7 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/company/{companyId}")
-	public ResponseEntity<Object> getByCompanyId(@PathVariable Long companyId) {
+	public ResponseEntity<Object> getByCompanyId(@PathVariable Integer companyId) {
 		List<User> userList = userService.findByCompanyId(companyId);
 		return new ResponseEntity<Object>(userList, HttpStatus.OK);
 	}

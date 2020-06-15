@@ -5,9 +5,9 @@ import java.util.List;
 import br.com.b3.model.User;
 
 public interface UserService {
-	public User findById(Long id);
+	public User findById(Integer id);
 	
-	public List<User> findByCompanyId(Long id);
+	public List<User> findByCompanyId(Integer id);
 	
 	public List<User> findByEmail(String email);
 	

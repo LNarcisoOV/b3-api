@@ -21,10 +21,10 @@ public class User {
 
 	@Id
 	@GeneratedValue
-	private Long userId;
+	private Integer userId;
 
 	@NotNull
-	private Long companyId;
+	private Integer companyId;
 
 	@NotNull
 	@NotEmpty
@@ -37,19 +37,19 @@ public class User {
 	@Past(message = "Birthdate should be in the past.")
 	private Date birthdate;
 
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public Long getCompanyId() {
+	public Integer getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
 

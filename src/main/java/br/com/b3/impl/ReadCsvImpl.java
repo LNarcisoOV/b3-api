@@ -89,7 +89,7 @@ public class ReadCsvImpl {
 
 	private void createAndSaveUser(String[] splitedString) {
 		try {
-			Long companyId = Long.parseLong(splitedString[0]);
+			Integer companyId = Integer.parseInt(splitedString[0]);
 			String email = splitedString[1];
 			Date birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(splitedString[2]);
 

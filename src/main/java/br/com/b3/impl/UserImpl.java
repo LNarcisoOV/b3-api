@@ -17,19 +17,19 @@ import br.com.b3.service.UserService;
 @Service
 public class UserImpl implements UserService {
 
-	private static final List<Long> VALID_COMPANY_IDS = Arrays.asList(new Long[] { 1L, 2L, 5L, 7L, 10L });
+	private static final List<Integer> VALID_COMPANY_IDS = Arrays.asList(new Integer[] { 1, 2, 5, 7, 10 });
 	private static final int MAX_EMAIL_SIZE = 255;
 	private static final String DATE_PATTERN = "dd/MM/yyyy";
 
 	@Autowired
 	private UserRepository userRepository;
 
-	public User findById(Long id) {
+	public User findById(Integer id) {
 		List<User> userList = userRepository.findAll();
 		return userList.stream().filter(u -> u.getUserId().equals(id)).findFirst().get();
 	}
 
-	public List<User> findByCompanyId(Long companyId) {
+	public List<User> findByCompanyId(Integer companyId) {
 		List<User> userList = userRepository.findAll();
 		return userList.stream().filter(u -> u.getCompanyId().equals(companyId)).collect(Collectors.toList());
 	}
